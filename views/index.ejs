@@ -1,11 +1,30 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= title %></title>
+    <title>Twitter</title>
+    <% include head.ejs %>
     <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
   <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
+  	<% include header.ejs %>
+  	
+  	<div class="container" style="margin-top: 20px">
+  		<div class="row">
+  			<div class="col-lg-offset-9 col-lg-3 login-box-wrapper">
+  				<div class="login-box">
+  					<div class="title-box">
+  						<h3 class="login-title">Log in to your account</h3>
+  					</div>
+  					<input type="text" class="text-input" placeholder="Phone, email or username">
+  					<input type="password" class="text-input" placeholder="Password">
+  					<div style="font-size: 12px; float: right; margin-top: 10px;">Forgot password?</div>
+  					<button class="login-btn">Log in</button>
+  				</div>
+  			</div>
+  		</div>
+  	</div>
+  	
+  	<div class="container" style="height:1000px">
+    <% include foot.ejs %>
   </body>
 </html>

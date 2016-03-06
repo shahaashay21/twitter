@@ -1,8 +1,112 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+body{
+	color: white;
+	background-color: #f5f8fa;
+}
+a:hover{
+	text-decoration: none;
+}
+.container-fluid{
+	padding: 0;
+}
+.header_bg{
+	background-image:url(/img/header_bg.png);
+	height:210px;
+	width:100%;
+	background-size: 100% 100%;
+	position: fixed;
+	z-index: 9;
 }
 
-a {
-  color: #00B7FF;
+.header_bg .fa-twitter{
+	color: white;
+	margin-top:15px;
 }
+
+.header_bg .btn{
+	border-radius: 5px;
+	font-size: 16px;
+	padding: 8px 32px;
+	background: transparent none repeat scroll 0 0;
+	margin-top: 15px;
+	color: #fff;
+	font-weight: 200;
+	-webkit-transition: linear 0.1s;
+	transition: linear 0.1s;
+}
+.header_bg .btn:hover{
+	background: #fff none repeat scroll 0 0;
+	color: #1da1f2
+}
+
+.header_bg .sign-up{
+	border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.header_bg .sign-in{
+	margin-left: 8px;
+	background: rgba(255, 255, 255, 0.3) none repeat scroll 0 0;
+}
+
+.header_bg h2{
+	font-size: 32px;
+	margin-top:5px;
+	margin-bottom:2px;
+}
+.header_bg p{
+	font-size: 21px;
+}
+
+
+.login-box-wrapper{
+	background-color: #1da1f2;
+	border-radius: 5px;
+	height: 340px;
+}
+
+.login-box{
+	margin: 0 15px;
+	padding: 45px 0px;
+}
+.login-title{
+	font-size: 22px;
+}
+.text-input{
+	background: transparent none repeat scroll 0 0;
+	border-color: white;
+	border-width: 0 0 1px;
+	font-size: 14px;
+	width: 100%;
+	margin-top: 10px;
+	padding: 5px
+}
+.login-btn{
+	color:#1da1f2;
+	background-color: #fff;
+	margin-top: 18px;
+	padding: 11px 16px;
+	font-size: 16px;
+	width:100%;
+	border: 1px solid white;
+	border-radius: 5px;
+}
+
+
+#login-modal a{
+	color: #1da1f2;
+}
+
+#login-modal h4{
+	color: #8899a6;
+	margin: 0px;
+}
+
+#login-modal .fgt-pass{
+	font-size: 12px;
+	float: right;
+	margin-top: 10px;
+	color: #1da1f2;
+}
+
+
+
+
