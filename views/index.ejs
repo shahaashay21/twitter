@@ -15,10 +15,15 @@
   					<div class="title-box">
   						<h3 class="login-title">Log in to your account</h3>
   					</div>
-  					<input type="text" class="text-input" placeholder="Phone, email or username">
-  					<input type="password" class="text-input" placeholder="Password">
-  					<div style="font-size: 12px; float: right; margin-top: 10px;">Forgot password?</div>
-  					<button class="login-btn">Log in</button>
+  					<div class="col-xs-12" style="margin-top:-5px; margin-bottom:9px">
+						<center><div style="color: #db2e2e; font-weight: bold; display:none" class="wrong-cred1">Wrong Email or Password</div></center>
+					</div>
+					<form class="loginForm1" method="post">
+	  					<input type="text" class="text-input" name="email-login" placeholder="Email Id">
+	  					<input type="password" class="text-input" name="pass-login" placeholder="Password">
+	  					<a href="" class="fgt-pass" style="color: #fff; margin-top: 10px;">Forgot password?</a>
+	  					<input type="submit" class="login-btn" value="Log in">
+  					</form>
   				</div>
   			</div>
   		</div>
