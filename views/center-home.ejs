@@ -1,0 +1,91 @@
+<div class="center-home">
+	<div class="col-xs-12 top">
+		<div class="col-xs-1">
+	    	<img src="/img/<%= dp %>" class="img-rounded menu-img" style="margin: 0px">
+		</div>
+		<div class="col-xs-11" style="margin-top: -1px">
+			<div class="input-group stylish-input-group1 pull-left">
+	            <input type="text" class="form-control tweetbox" placeholder="What&#39;s Happening?">
+	            <span class="input-group-addon">
+	                <button type="submit" style="color: #1b95e0;">
+	                    <span class="glyphicon glyphicon-camera"></span>
+	                </button>  
+	            </span>
+	        </div>
+	        <div class="stylish-input-group2" style="display: none;">
+	        	<div class="input-group" style="width: 100%;">
+	        		<textarea ng-model="tweet" class="tweetarea" ng-keyup="tweetchar()" rows="3" spellcheck="true" placeholder="What&#39;s Happening?">{{ tweet }}</textarea>
+	        	</div>
+	        	<div class="bottom-textarea" style="padding-top: 5px">
+	            	<span class="glyphicon glyphicon-camera pull-left" style="color: #1b95e0;; font-size: 24px"></span>
+	            	<div class="pull-right">
+	            		<div class="pull-left" style="color: #66757f; margin: 7px 15px">{{ 140 - tweet.length }}</div>
+	            		<div class="tweet tweetsubmitbtn pull-left disabled" ng-click="tweetsubmit();">
+				        	<span class="glyphicon glyphicon-leaf"></span>
+				        	<span>Tweet</span>
+				        </div>
+	            	</div>
+	            </div>
+	        </div>
+		</div>
+	</div>
+</div>
+<div class="col-xs-12 tweetpost no-padding">
+
+	<div class="col-xs-12 no-padding show-tweetbox" ng-repeat="post in tweets">
+		<div class="col-xs-1" ng-if="post.user.dp">
+    		<img ng-src="/img/{{ post.user.dp }}" class="img-rounded menu-img" style="margin: 0px; height: 48px; width:48px">
+		</div>
+		<div class="col-xs-11 no-padding" style="margin-top: -1px; padding-left: 16px">
+			<div class="col-xs-12">
+				<span class="camel" style="color: #000"><b>{{ post.user.fname }} {{ post.user.lname }}</b></span>
+				<span style="color: #8899a6">@{{ post.user.tweet_handle }} - {{ post.time }}</span>
+			</div>
+			<div class="col-xs-12">
+				<span style="color: #292f33" ng-bind-html="post.tweet | unsafe">{{ post.tweet }}</span>
+			</div>
+			<div class="col-xs-12" ng-if="post.img_url != null">
+				<img ng-src="/img/{{ post.img_url }}" class="img-rounded menu-img" style="margin: 0px; margin-top: 10px; height: 100%; width: 100%; padding-bottom:15px">
+			</div>
+		</div>
+		<div class="col-xs-12" style="color: #aab8c2">
+			<div class="col-xs-offset-1 col-xs-2">
+				<i class="fa fa-retweet retweet"></i> 12 
+			</div>
+			<div class="col-xs-2">
+				<i class="fa fa-heart like"></i> 4
+			</div>
+			<div class="col-xs-2" ng-if="user == post.user_id">
+				<div class="dropdown">
+				    <i class="fa fa-ellipsis-h option dropdown-toggle" type="button" data-toggle="dropdown"></i>
+				    <ul class="dropdown-menu">
+				      <li><a href="" ng-click="deleteTweet(post.id)">Delete</a></li>
+				    </ul>
+			    </div>
+			</div>
+		</div>
+	</div>
+	
+	
+	
+</div>
+
+<script>
+
+$(document).ready(function(){
+	$(".tweetbox").focus(function(){
+		$(".stylish-input-group1").hide();
+		$(".center-home .top").css('height', '155px');
+		$(".stylish-input-group2").show();
+		$(".tweetarea").focus();
+	});
+	$(".tweetarea").blur(function(){
+		var chk = $(".tweetarea").val();
+		if(chk.length == 0){
+			$(".stylish-input-group2").hide();
+			$(".stylish-input-group1").show();
+			$(".center-home .top").css('height', '55px');
+		}
+	});
+});
+</script>

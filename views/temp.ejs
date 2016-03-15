@@ -1,0 +1,19 @@
+<div class="list-group qsuggest" style="position:absolute; width: 300px; top: 45px; left: 0px;">
+			            	  <!-- <a href="#" class="list-group-item">Cras justo odio</a>
+							  <a href="#" class="list-group-item">Dapibus ac facilisis in</a>
+							  <a href="#" class="list-group-item">Morbi leo risus</a>
+							  <a href="#" class="list-group-item">Porta ac consectetur ac</a>
+							  <a href="#" class="list-group-item">Vestibulum at eros</a> -->
+							  <div class="suggestionbox" ng-repeat="se in availableTags">
+								  <a href="#" class="list-group-item camel highlightstyle" style="display:table; padding: 10px 0; width: 300px">
+								  	<div class="col-xs-12 no-padding">
+								  		<div class="col-xs-2 no-padding">
+								  			<img ng-src="./img/{{ se.dp }}" class="img-rounded menu-img">
+								  		</div>
+								  		<div class="col-xs-10" style="padding-top: 5px">
+								  			<span class="suggest-name">{{ se.fname }} {{ se.lname }}</span><span style="color: #8899a6; margin-left: 5px; font-weight: 13px"><span stle="color: #ccd6dd">@</span>{{ se.tweet_handle }}</span>
+								  		</div>
+								  	</div>
+								  </a>
+							  </div>
+			            </div>

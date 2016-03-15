@@ -1,5 +1,9 @@
 $(document).ready(function(e){
 	
+	//INITIALIZE TOOLTIP
+	$('[data-toggle="tooltip"]').tooltip();
+	
+	//MAIN PAGE SCROLL EFFECT
 	$(window).scroll(function(){
 		//console.log($(this).scrollTop());
 		if($(this).scrollTop() > 1){
@@ -24,6 +28,21 @@ $(document).ready(function(e){
 			$(".header_bg p").fadeIn();
 			
 			
+		}
+	});
+	
+	//HOME PAGE MENU AND NOTIFICATION EFFECT
+	var home = 1;
+	var noti = 0;
+	$(".menu").hover(function(){
+		$(this).css('border-bottom', '3px solid #1b95e0');
+	}, function(){
+		$(this).css('border-bottom', 'none');
+		if(home == 1){
+			$(".home").css('border-bottom', '3px solid #1b95e0');
+		}
+		if(noti == 1){
+			$(".notification").css('border-bottom', '3px solid #1b95e0');
 		}
 	});
 	
@@ -52,6 +71,14 @@ $(document).ready(function(e){
 		nullFieldValidation('pass-login');
 	});
 	
+	//HIDE USER SUGGESTION IF CLICK OUTSIDE
+	$(":not(.qsuggest)").click(function(){
+		$(".qsuggest").hide();
+	});
+//	HIDE HASHTAG SUGGESTION IF CLICK OUTSIDE
+	$(":not(.qsuggesthashtag)").click(function(){
+		$(".qsuggesthashtag").hide();
+	});
 });
 
 //CHECK BEFOR LOGIN
@@ -146,6 +173,11 @@ function nullFieldValidation(id){
 	}
 }
 
+//CameCase
+function toTitleCase(str)
+{
+    return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+}
 
 // VALIDATE EMAIL ID
 function validateEmail(email)

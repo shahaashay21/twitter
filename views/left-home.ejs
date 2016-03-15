@@ -1,0 +1,36 @@
+<div class="wrapper left-home">
+	<div class="pull-left left-menu-img-wrapper">
+    	<img src="./img/<%= dp %>" class="img-rounded left-menu-img">
+	</div>
+	<div class="top">
+		
+	</div>
+	<div class="bottom">
+		<div class="col-xs-12" style="padding-left: 102px">
+			<div class="usname camel"><b><%= fname %> <%= lname %></b></div>
+			<div class="handle">@<%= tweet_handle %></div>
+		</div>
+		<div class="col-xs-12" style="margin-top: 7px">
+			<div class="row">
+				<div class="col-xs-4">
+					<div class="tweets">
+						<span style="font-size: 10px;">TWEETS</span><br>
+						<span ng-model="totalTweet" ng-init="totalTweet = <%= tweet %>" style="color: #1da1f2; font-size: 20px">{{ totalTweet }}</span>
+					</div>
+				</div>
+				<div class="col-xs-4">
+					<div class="following">
+						<span style="font-size: 10px;">FOLLOWING</span><br>
+						<span style="color: #1da1f2; font-size: 20px"><%= following %></span>
+					</div>
+				</div>
+				<div class="col-xs-4">
+					<div class="followers">
+						<span style="font-size: 10px;">FOLLOWERS</span><br>
+						<span style="color: #1da1f2; font-size: 20px"><%= followers %></span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

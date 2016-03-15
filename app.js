@@ -8,7 +8,9 @@ var express = require('express')
   , user = require('./routes/user')
   , http = require('http')
   , path = require('path')
-  , login = require('./routes/login');
+  , login = require('./routes/login')
+  , tweet = require('./routes/tweet')
+  , hash = require('./routes/hash');
 
 var mysql = require('mysql');
 var session = require('express-session');
@@ -78,9 +80,7 @@ if ('development' == app.get('env')) {
 app.get('/', routes.index);
 app.get('/users', user.list);
 
-app.get('/a', function(req,res){
-	sessionStore.closeStore();
-});
+app.get('/hashtag/:tag', hash.page);
 
 //POST REQUEST
 
@@ -90,6 +90,16 @@ app.post('/reg', login.registerUser);
 app.post('/login', login.loginUser);
 //To logout user
 app.post('/logout', login.logOut);
+//Insert tweet to db
+app.post('/tweet', tweet.ins);
+//Get recent tweet
+app.post('/recenttweet', tweet.recentTweet);
+//Delete tweet
+app.post('/deletetweet', tweet.deleteTweet);
+//Search suggestion
+app.post('/suggest', tweet.suggest);
+//Get Hash Tweet
+app.post('/hashtweet', hash.hashtweet);
 
 
 http.createServer(app).listen(app.get('port'), function(){

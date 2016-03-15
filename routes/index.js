@@ -3,28 +3,29 @@
  * GET home page.
  */
 var db = require('./datamodel');
+var user = require('./user');
 exports.index = function(req, res){
 	
-//	bCrypt.genSalt(8, hashcall);
-//	function hashcall(err,res){
-//		bCrypt.hash("aashay", res, null, gtf);
-//	}
+//	console.log(req.sessionID);
+////	db.Sessions.findOne({where: {session_id: req.sessionID}, attributes: ['data']}).then(function(ans){
+////		console.log(ans.dataValues);
+////	});
+//	db.Tweet.belongsTo(db.Users, {foreignKey: 'user_id'});
+//	db.Users.hasOne(db.Tweet, {foreignKey: 'user_id'});
 //	
-//	function gtf(err, res){
-//		console.log(res);
-//		comp(res);
-//	}
-//	function comp(hash){
-//		bCrypt.compare("bacon", hash, function(err, res) {
-//		    console.log(res);
-//		});
-//	}
-	console.log(req.sessionID);
-	db.Sessions.findOne({where: {session_id: req.sessionID}, attributes: ['data']}).then(function(ans){
-		console.log(ans.dataValues);
-	});
+//	db.Tweet.findAll( {include: [db.Users]}).then(function(ans){
+////		console.log(ans[0].dataValues.user.dataValues);
+//	});
+//	
+//	db.Users.findAll( {include: [db.Tweet]}).then(function(ans){
+//		console.log(ans[1].dataValues);
+//	});
 	if(req.session.uid){
-		res.render('home', { title: 'Express Home' });
+		user.userInfo(req.session.uid, function(userinfo){
+//			console.log(userinfo);
+			res.render('home', userinfo);
+		});
+		
 	}else{
 		res.render('index', { title: 'Express' });
 	}

@@ -29,6 +29,7 @@ exports.loginUser = function(req, res){
 };
 
 exports.registerUser = function(req,res){
+	console.log("Class Login and function registerUser");
 //	db.Users.sync();
 	var email = req.param('email');
 	var pass = req.param('pass');
