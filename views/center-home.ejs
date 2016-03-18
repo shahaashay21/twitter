@@ -32,7 +32,7 @@
 </div>
 <div class="col-xs-12 tweetpost no-padding">
 
-	<div class="col-xs-12 no-padding show-tweetbox" ng-repeat="post in tweets">
+	<!--<div class="col-xs-12 no-padding show-tweetbox" ng-repeat="post in tweets">
 		<div class="col-xs-1" ng-if="post.user.dp">
     		<img ng-src="/img/{{ post.user.dp }}" class="img-rounded menu-img" style="margin: 0px; height: 48px; width:48px">
 		</div>
@@ -53,7 +53,53 @@
 				<i class="fa fa-retweet retweet"></i> 12 
 			</div>
 			<div class="col-xs-2">
-				<i class="fa fa-heart like"></i> 4
+				<div ng-if="post.userlike == 1">
+					<i class="fa fa-heart like" style="color:#e81c4f" ng-click="like(post.id,$index)"></i>
+				</div>
+				<div ng-if="post.userlike == 0">
+					<i class="fa fa-heart like" ng-click="like(post.id,$index)"></i>
+				</div>
+				<span ng-repeat="userlike in tweetlike">
+					<span ng-if="userlike.tweet_id == post.id">
+						<span>{{ userlike.likes }}</span>
+					</span>
+				</span>
+			</div>
+			<div class="col-xs-2" ng-if="user == post.user_id">
+				<div class="dropdown">
+				    <i class="fa fa-ellipsis-h option dropdown-toggle" type="button" data-toggle="dropdown"></i>
+				    <ul class="dropdown-menu">
+				      <li><a href="" ng-click="deleteTweet(post.id)">Delete</a></li>
+				    </ul>
+			    </div>
+			</div>
+		</div>
+	</div>-->
+	
+	<div class="col-xs-12 no-padding show-tweetbox" ng-repeat="post in tweets">
+		<div class="col-xs-1" ng-if="post.dp">
+    		<img ng-src="/img/{{ post.dp }}" class="img-rounded menu-img" style="margin: 0px; height: 48px; width:48px">
+		</div>
+		<div class="col-xs-11 no-padding" style="margin-top: -1px; padding-left: 16px">
+			<div class="col-xs-12">
+				<span class="camel" style="color: #000"><b>{{ post.fname }} {{ post.lname }}</b></span>
+				<span style="color: #8899a6">@{{ post.tweet_handle }} - {{ post.time }}</span>
+			</div>
+			<div class="col-xs-12">
+				<span style="color: #292f33" ng-bind-html="post.tweet | unsafe">{{ post.tweet }}</span>
+			</div>
+			<div class="col-xs-12" ng-if="post.img_url != null">
+				<img ng-src="/img/{{ post.img_url }}" class="img-rounded menu-img" style="margin: 0px; margin-top: 10px; height: 100%; width: 100%; padding-bottom:15px">
+			</div>
+		</div>
+		<div class="col-xs-12" style="color: #aab8c2">
+			<div class="col-xs-offset-1 col-xs-2">
+				<i class="fa fa-retweet retweet"></i> 12 
+			</div>
+			<div class="col-xs-2">
+					<i class="fa fa-heart like" ng-show="post.userlike" style="color:#e81c4f" ng-click="like(post.id,post.userlike,$index)"></i>
+					<i class="fa fa-heart like" ng-hide="post.userlike" ng-click="like(post.id,post.userlike,$index)"></i>
+				<span>{{ post.tweetlikes }}</span>
 			</div>
 			<div class="col-xs-2" ng-if="user == post.user_id">
 				<div class="dropdown">

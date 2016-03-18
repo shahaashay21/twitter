@@ -79,7 +79,11 @@ app.controller("twitter",function($scope, $http, $location){
 			dataType: 'json'
 		}).then(function(data){
 //			console.log(data.data);
-			$scope.tweets = data.data.da;
+//			console.log(data.data.likes);
+//			$scope.tweetlike = data.data.likes;
+//			$scope.likeval = data.data.likes;
+			$scope.tweets = data.data.da[0];
+//			console.log($scope.tweetlike);
 			$scope.user = data.data.user;
 			for(var i=0; i<$scope.tweets.length; i++){// Give all object of tweet
 //				console.log($scope.tweets[i].tweet);
@@ -99,11 +103,12 @@ app.controller("twitter",function($scope, $http, $location){
 				var minutes = parseInt(seconds/60);
 				var hrs = parseInt(minutes/60);
 				var days = parseInt(hrs/24);
+				var months = parseInt(hrs/30);
 				if(seconds > 60){
 					if(minutes > 60){
-						if(hrs > 60){
-							if(days > 24){
-								
+						if(hrs > 24){
+							if(days > 30){
+								var time = months+"m";
 							}else{
 								var time = days+"d"; 
 							}
@@ -187,6 +192,27 @@ app.controller("twitter",function($scope, $http, $location){
 	//REDIRECT TO HASHTAG SEARCH
 	$scope.hashtagRedirect = function(hashtag){
 		window.location.assign("/hashtag/"+hashtag);
+	}
+	
+	
+	$scope.like = function(id,userlike,index){
+		data = {'id': id};
+//		console.log(index);
+		$http({
+			method: 'POST',
+			url: 'like',
+			data: data,
+			dataType: 'json'
+		}).then(function suc(reslike){
+			if(reslike.data == true){
+				$scope.tweets[index].tweetlikes = Number($scope.tweets[index].tweetlikes) + 1;
+				$scope.tweets[index].userlike = 1;
+			}
+			if(reslike.data == false){
+				$scope.tweets[index].tweetlikes = Number($scope.tweets[index].tweetlikes) - 1;
+				$scope.tweets[index].userlike = 0;
+			}
+		});
 	}
 	
 	//GET UNIQUE ARRAY

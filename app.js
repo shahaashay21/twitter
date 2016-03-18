@@ -100,6 +100,8 @@ app.post('/deletetweet', tweet.deleteTweet);
 app.post('/suggest', tweet.suggest);
 //Get Hash Tweet
 app.post('/hashtweet', hash.hashtweet);
+//Like and Dislike button
+app.post('/like', tweet.like);
 
 
 http.createServer(app).listen(app.get('port'), function(){

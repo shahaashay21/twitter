@@ -70,11 +70,21 @@ exports.recentTweet = function(req,res){
 		followingIds[i] = req.session.uid.uid;
 		console.log(followingIds);
 		db.Tweet.belongsTo(db.Users, {foreignKey:'user_id'});
-		db.Tweet.findAll({where: {'user_id':{$in: followingIds}}, limit: 10, order: [['createdAt', 'DESC']], include: [db.Users]}).then(function(allTweets){
-//			allTweets['userid'] = req.session.uid.uid;
-			var data = {'user': req.session.uid.uid, 'da': allTweets};
-//			console.log(data);
-			res.send(data);
+		db.Tweet.hasMany(db.Likes, {foreignKey:'tweet_id'});
+//		db.Tweet.findAll({where: {'user_id':{$in: followingIds}}, limit: 10, order: [['createdAt', 'DESC']], include: [db.Users]}).then(function(allTweets){
+//		WITHOUT USERLIKE(CHECK USER HAS LIKED OR NOT)
+//		var query = "SELECT t.*, u.fname, u.lname, u.dp, u.tweet_handle, COUNT(l.id) AS tweetlikes FROM tweet AS t LEFT JOIN users AS u ON t.user_id = u.id LEFT JOIN likes AS l ON l.tweet_id = t.id WHERE t.user_id in ("+followingIds+") GROUP BY t.id ORDER BY t.createdAt DESC LIMIT 10";
+//		WITH USERLIKE
+		var query = "select sub2.*, ifnull(sub3.likecount,0) as userlike from (SELECT t.*, u.fname, u.lname, u.dp, u.tweet_handle, COUNT(l.id) AS tweetlikes FROM tweet AS t LEFT JOIN users AS u ON t.user_id = u.id LEFT JOIN likes AS l ON l.tweet_id = t.id WHERE t.user_id in ("+followingIds+") GROUP BY t.id) sub2 LEFT JOIN (SELECT tweet_id, count(*) as likecount from LIKES where user_id="+req.session.uid.uid+" group by tweet_id) as sub3 ON sub2.id= sub3.tweet_id ORDER BY sub2.createdAt DESC LIMIT 10";
+		db.sequelize.query(query).then(function(allTweets){
+//			db.Likes.findAll({attributes: [Sequelize.literal('COUNT(`tweet_id`) as likes'), 'tweet_id'], group: 'tweet_id', raw:true}).then(function(likes){
+//				console.log(likes);
+				allTweets['userid'] = req.session.uid.uid;
+//				allTweets['likes'] = likes;
+				var data = {'user': req.session.uid.uid, 'da': allTweets};
+//				console.log(data.da);
+				res.send(data);
+//			});
 		});
 	});
 };
@@ -96,6 +106,28 @@ exports.deleteTweet = function(req,res){
 	});
 };
 
+exports.like = function(req,res){
+	id = req.param('id');
+	db.sequelize.query("select get_nextid('likes') as id;").spread(function(nextid,metadata){
+		console.log(nextid[0].id);
+		data = {};
+		data['id'] = nextid[0].id;
+		data['user_id'] = req.session.uid.uid;
+		data['tweet_id'] = id;
+		db.Likes.findOrCreate({where: {'user_id': req.session.uid.uid, 'tweet_id': id}, defaults: data, raw:true}).then(function(create){
+			if(create[1] == true){
+				res.send(create[1]);
+			}else{
+				db.Likes.destroy({where: {'user_id': req.session.uid.uid, 'tweet_id': id}}).then(function(del){
+					res.send(create[1]);
+				});			
+			}
+		});
+	});
+}
+
+
+//GIVE SUGGESTION ON BASED ON NAME, TWEET_HANDLE AND HASHTAG
 exports.suggest = function(req,res){
 	var q = req.param('q');
 	if(q.charAt(0) == '#'){

@@ -121,15 +121,21 @@ exports.Hashtag = sequelize.define('hashtag',{
 	tableName: 'hashtag'
 });
 
-exports.Like = sequelize.define('like',{
+exports.Likes = sequelize.define('likes',{
 	id: {
 		type: Sequelize.INTEGER,
 		primaryKey: true
+	},
+	user_id: {
+		type: Sequelize.INTEGER,
+	},
+	tweet_id: {
+		type: Sequelize.INTEGER,
 	}
 	},{
 	timestamps: false,
 	freezeTableName: true,
-	tableName: 'like'
+	tableName: 'likes'
 });
 
 exports.Identity = sequelize.define('identity',{
