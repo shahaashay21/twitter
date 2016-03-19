@@ -65,10 +65,15 @@ app.controller("twitter",function($scope, $http, $location){
 	//GET RECENT TWEET
 	$scope.recenttweet = function(){
 		if(window.hashSearch){
-			console.log("do");
+			$scope.orm = 0;
 			var url = "/hashtweet";
 			var data = {'q': window.hashSearch}; 
+		}else if(window.userid){
+			$scope.orm = 0;
+			var url = "/tweetbyuserid";
+			var data = {'q': window.userid};
 		}else{
+			$scope.orm = 0;
 			var url = "/recenttweet";
 			var data = {'q': ""};
 		}
@@ -82,7 +87,12 @@ app.controller("twitter",function($scope, $http, $location){
 //			console.log(data.data.likes);
 //			$scope.tweetlike = data.data.likes;
 //			$scope.likeval = data.data.likes;
-			$scope.tweets = data.data.da[0];
+			if($scope.orm == 1){
+				$scope.tweets = data.data.da;
+			}else{
+				$scope.tweets = data.data.da[0];
+			}
+//			console.log($scope.tweets);
 //			console.log($scope.tweetlike);
 			$scope.user = data.data.user;
 			for(var i=0; i<$scope.tweets.length; i++){// Give all object of tweet
@@ -186,7 +196,7 @@ app.controller("twitter",function($scope, $http, $location){
 	
 	//REDIRECT TO USER PROFILE PAGE
 	$scope.userRedirect= function(id){
-		window.location.assign("./user/"+id);
+		window.location.assign("/user/"+id);
 	};
 	
 	//REDIRECT TO HASHTAG SEARCH
@@ -200,7 +210,7 @@ app.controller("twitter",function($scope, $http, $location){
 //		console.log(index);
 		$http({
 			method: 'POST',
-			url: 'like',
+			url: '/like',
 			data: data,
 			dataType: 'json'
 		}).then(function suc(reslike){

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= fname.toUpperCase() %> <%= lname.toUpperCase() %></title>
+    <% include head.ejs %>
+  </head>
+  <body  ng-app="twitter" ng-controller="twitter" ng-init="tweetss=init('<%= fname %>')">
+  	<% include header-home.ejs %>
+  	
+  	<div class="container-fluid" style="height: 175px; background-color:#0084b4">
+  		<div class="container">
+  			<div class="col-xs-12">
+		  		<div style="position:absolute; z-index:1; margin-top:50px">
+		  			<img src="/img/<%= us.dp %>" class="img-rounded menu-img" style="height: 200px; width:200px">
+		  		</div>
+		  	</div>
+  		</div>
+  	</div>
+  	<div class="container-fluid" style="height: 60px; background-color:#fff; border-bottom:1px solid #e1e8ed">
+  		<div class="container">
+  			<div class="col-xs-offset-3 col-xs-6" style="color:#66757f">
+  				<div class="" style="">
+  					<div style="margin-top:10px; height:50px; border-bottom: 4px solid #0084b4; float:left; padding:0 10px">
+  						<center>
+	  						<div style="font-size:12px">TWEETS</div>
+	  						<div style="font-size:18px"><%= us.tweet %></div>
+	  					</center>
+  					</div>
+  					<div style="margin-top:10px; height:50px; border-bottom: 4px solid #0084b4; float:left; padding:0 10px">
+  						<center>
+	  						<div style="font-size:12px">FOLLOWING</div>
+	  						<div style="font-size:18px"><%= us.following %></div>
+	  					</center>
+  					</div>
+  					<div style="margin-top:10px; height:50px; border-bottom: 4px solid #0084b4; float:left; padding:0 10px">
+  						<center>
+	  						<div style="font-size:12px">FOLLOWERS</div>
+	  						<div style="font-size:18px"><%= us.followers %></div>
+	  					</center>
+  					</div>
+  				</div>
+  			</div>
+  		</div>
+  	</div>
+  	<div class="container" style="margin-top: 10px">
+  		<div class="row">
+  			<div class="col-lg-3 left-panel">
+  				<% include left-user-home.ejs %>
+  			</div>
+  			<div class="col-lg-6">
+  				<% include center-home.ejs %>
+  			</div>
+  			<div class="col-lg-9">
+  				<% include right-home.ejs %>
+  			</div>
+  		</div>
+  	</div>
+  	
+  	<script>userid="<%=userid%>";</script>
+    <% include foot.ejs %>
+  </body>
+</html>

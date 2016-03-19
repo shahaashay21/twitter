@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Twitter - Home</title>
+    <title>#<%= hashSearch.toString() %></title>
     <% include head.ejs %>
   </head>
   <body  ng-app="twitter" ng-controller="twitter" ng-init="tweetss=init('<%= fname %>')">
@@ -13,6 +13,7 @@
   				
   			</div>
   			<div class="col-lg-6">
+  				<% include hashsearch.ejs %>
   				<% include center-home.ejs %>
   			</div>
   			<div class="col-lg-9">
@@ -21,8 +22,7 @@
   		</div>
   	</div>
   	
-  	<div class="container" style="height:1000px">
-  	</div>
+  	
   	<script>hashSearch="<%=hashSearch%>";</script>
     <% include foot.ejs %>
   </body>

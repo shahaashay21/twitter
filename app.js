@@ -80,7 +80,11 @@ if ('development' == app.get('env')) {
 app.get('/', routes.index);
 app.get('/users', user.list);
 
+//GET ALL THE TWEET THAT HAS HASHTAG OF :TAG
 app.get('/hashtag/:tag', hash.page);
+
+//USER PROFILE FROM ID
+app.get('/user/:id',user.profile)
 
 //POST REQUEST
 
@@ -102,6 +106,9 @@ app.post('/suggest', tweet.suggest);
 app.post('/hashtweet', hash.hashtweet);
 //Like and Dislike button
 app.post('/like', tweet.like);
+//Show all tweets of user by userid
+app.post('/tweetbyuserid', tweet.tweetbyuserid);
+
 
 
 http.createServer(app).listen(app.get('port'), function(){

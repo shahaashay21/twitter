@@ -25,7 +25,7 @@ exports.ins = function(req, res){
 		}
 	}
 	hash = hash.getUnique(true);
-	console.log(hash);
+//	console.log(hash);
 	
 	var hashdata = [];
 	if(tweet.length == 0 || tweet.length > 140){
@@ -40,7 +40,7 @@ exports.ins = function(req, res){
 			data['user_id'] = req.session.uid.uid;
 			//FIND OR CREATE NEW TWEET INTO DB
 			db.Tweet.findOrCreate({where: {'id': data['id']}, defaults: data}).spread(function(user,created){
-				console.log(nxid);
+//				console.log(nxid);
 				for(var i=0; i<hash.length; i++){
 					hashdata[i] = {'tweet_id': nxid, 'user_id': req.session.uid.uid, 'hashtag': hash[i]};
 				}
@@ -68,14 +68,14 @@ exports.recentTweet = function(req,res){
 			followingIds[i] = following[i].dataValues.following_id; 
 		}
 		followingIds[i] = req.session.uid.uid;
-		console.log(followingIds);
+//		console.log(followingIds);
 		db.Tweet.belongsTo(db.Users, {foreignKey:'user_id'});
 		db.Tweet.hasMany(db.Likes, {foreignKey:'tweet_id'});
 //		db.Tweet.findAll({where: {'user_id':{$in: followingIds}}, limit: 10, order: [['createdAt', 'DESC']], include: [db.Users]}).then(function(allTweets){
 //		WITHOUT USERLIKE(CHECK USER HAS LIKED OR NOT)
 //		var query = "SELECT t.*, u.fname, u.lname, u.dp, u.tweet_handle, COUNT(l.id) AS tweetlikes FROM tweet AS t LEFT JOIN users AS u ON t.user_id = u.id LEFT JOIN likes AS l ON l.tweet_id = t.id WHERE t.user_id in ("+followingIds+") GROUP BY t.id ORDER BY t.createdAt DESC LIMIT 10";
 //		WITH USERLIKE
-		var query = "select sub2.*, ifnull(sub3.likecount,0) as userlike from (SELECT t.*, u.fname, u.lname, u.dp, u.tweet_handle, COUNT(l.id) AS tweetlikes FROM tweet AS t LEFT JOIN users AS u ON t.user_id = u.id LEFT JOIN likes AS l ON l.tweet_id = t.id WHERE t.user_id in ("+followingIds+") GROUP BY t.id) sub2 LEFT JOIN (SELECT tweet_id, count(*) as likecount from LIKES where user_id="+req.session.uid.uid+" group by tweet_id) as sub3 ON sub2.id= sub3.tweet_id ORDER BY sub2.createdAt DESC LIMIT 10";
+		var query = "select sub2.*, ifnull(sub3.likecount,0) as userlike from (SELECT t.*, u.fname, u.lname, u.dp, u.tweet_handle, COUNT(l.id) AS tweetlikes FROM tweet AS t LEFT JOIN users AS u ON t.user_id = u.id LEFT JOIN likes AS l ON l.tweet_id = t.id WHERE t.user_id in ("+followingIds+") GROUP BY t.id) sub2 LEFT JOIN (SELECT tweet_id, count(*) as likecount from LIKES where user_id="+req.session.uid.uid+" group by tweet_id) as sub3 ON sub2.id= sub3.tweet_id ORDER BY sub2.createdAt DESC";
 		db.sequelize.query(query).then(function(allTweets){
 //			db.Likes.findAll({attributes: [Sequelize.literal('COUNT(`tweet_id`) as likes'), 'tweet_id'], group: 'tweet_id', raw:true}).then(function(likes){
 //				console.log(likes);
@@ -88,6 +88,24 @@ exports.recentTweet = function(req,res){
 		});
 	});
 };
+
+//ALL TWEETS OF USER BY USERID
+exports.tweetbyuserid = function(req,res){
+	var userid = req.param('q');
+	var query = "select sub2.*, ifnull(sub3.likecount,0) as userlike from (SELECT t.*, u.fname, u.lname, u.dp, u.tweet_handle, COUNT(l.id) AS tweetlikes FROM tweet AS t LEFT JOIN users AS u ON t.user_id = u.id LEFT JOIN likes AS l ON l.tweet_id = t.id WHERE t.user_id in ("+userid+") GROUP BY t.id) sub2 LEFT JOIN (SELECT tweet_id, count(*) as likecount from LIKES where user_id="+req.session.uid.uid+" group by tweet_id) as sub3 ON sub2.id= sub3.tweet_id ORDER BY sub2.createdAt DESC";
+	db.sequelize.query(query).then(function(allTweets){
+		var data = {'user': req.session.uid.uid, 'da': allTweets};
+//		console.log(data.da);
+		res.send(data);
+	});
+	
+//	db.Tweet.belongsTo(db.Users, {foreignKey:'user_id'});
+//	db.Tweet.findAll({where: {'user_id': userid}, limit: 10, order: [['createdAt', 'DESC']], include: [db.Users]}).then(function(allTweets){
+//		var data = {'user': req.session.uid.uid, 'da': allTweets};
+//		console.log(data.da);
+//		res.send(data);
+//	});
+}
 
 //DELETE TWEET FROM DB
 exports.deleteTweet = function(req,res){
@@ -109,7 +127,7 @@ exports.deleteTweet = function(req,res){
 exports.like = function(req,res){
 	id = req.param('id');
 	db.sequelize.query("select get_nextid('likes') as id;").spread(function(nextid,metadata){
-		console.log(nextid[0].id);
+//		console.log(nextid[0].id);
 		data = {};
 		data['id'] = nextid[0].id;
 		data['user_id'] = req.session.uid.uid;

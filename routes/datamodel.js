@@ -94,6 +94,12 @@ exports.Follow = sequelize.define('follow',{
 	id: {
 		type: Sequelize.INTEGER,
 		primaryKey: true
+	},
+	following_id: {
+		type: Sequelize.INTEGER
+	},
+	followers_id: {
+		type: Sequelize.INTEGER
 	}
 	},{
 	timestamps: false,

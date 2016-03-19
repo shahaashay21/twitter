@@ -2,6 +2,10 @@ body{
 	color: white;
 	background-color: #f5f8fa;
 }
+a:focus, a:hover, .btn, .btn:hover, .btn:focus, .btn:active{
+	outline: none !important;
+	color: none !important;
+}
 a:hover{
 	text-decoration: none;
 }

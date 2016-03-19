@@ -1,0 +1,52 @@
+<div class="center-home">
+	<div class="col-xs-12 top">
+		<div class="col-xs-1">
+	    	<img src="/img/<%= dp %>" class="img-rounded menu-img" style="margin: 0px">
+		</div>
+		<div class="col-xs-11" style="margin-top: -1px">
+			<div class="input-group stylish-input-group1 pull-left">
+	            <input type="text" class="form-control tweetbox" placeholder="What&#39;s Happening?">
+	            <span class="input-group-addon">
+	                <button type="submit" style="color: #1b95e0;">
+	                    <span class="glyphicon glyphicon-camera"></span>
+	                </button>  
+	            </span>
+	        </div>
+	        <div class="stylish-input-group2" style="display: none;">
+	        	<div class="input-group" style="width: 100%;">
+	        		<textarea ng-model="tweet" class="tweetarea" ng-keyup="tweetchar()" rows="3" spellcheck="true" placeholder="What&#39;s Happening?">{{ tweet }}</textarea>
+	        	</div>
+	        	<div class="bottom-textarea" style="padding-top: 5px">
+	            	<span class="glyphicon glyphicon-camera pull-left" style="color: #1b95e0;; font-size: 24px"></span>
+	            	<div class="pull-right">
+	            		<div class="pull-left" style="color: #66757f; margin: 7px 15px">{{ 140 - tweet.length }}</div>
+	            		<div class="tweet tweetsubmitbtn pull-left disabled" ng-click="tweetsubmit();">
+				        	<span class="glyphicon glyphicon-leaf"></span>
+				        	<span>Tweet</span>
+				        </div>
+	            	</div>
+	            </div>
+	        </div>
+		</div>
+	</div>
+</div>
+
+<script>
+
+$(document).ready(function(){
+	$(".tweetbox").focus(function(){
+		$(".stylish-input-group1").hide();
+		$(".center-home .top").css('height', '155px');
+		$(".stylish-input-group2").show();
+		$(".tweetarea").focus();
+	});
+	$(".tweetarea").blur(function(){
+		var chk = $(".tweetarea").val();
+		if(chk.length == 0){
+			$(".stylish-input-group2").hide();
+			$(".stylish-input-group1").show();
+			$(".center-home .top").css('height', '55px');
+		}
+	});
+});
+</script>

@@ -1,14 +1,16 @@
 <div class="wrapper left-home">
-	<div class="pull-left left-menu-img-wrapper">
-    	<img src="./img/<%= dp %>" class="img-rounded left-menu-img">
-	</div>
+	<a href="/user/<%= id %>">
+		<div class="pull-left left-menu-img-wrapper">
+	    	<img ng-src="/img/<%= dp %>" class="img-rounded left-menu-img">
+		</div>
+	</a>
 	<div class="top">
 		
 	</div>
 	<div class="bottom">
 		<div class="col-xs-12" style="padding-left: 102px">
-			<div class="usname camel"><b><%= fname %> <%= lname %></b></div>
-			<div class="handle">@<%= tweet_handle %></div>
+			<span><a class="usname camel" href="/user/<%= id %>" style="color:#000"><b><%= fname %> <%= lname %></b></a></span><br>
+			<span class="handle"><a href="/user/<%= id %>" style="color:inherit">@<%= tweet_handle %></a></span>
 		</div>
 		<div class="col-xs-12" style="margin-top: 7px">
 			<div class="row">
