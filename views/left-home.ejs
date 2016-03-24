@@ -10,7 +10,7 @@
 	<div class="bottom">
 		<div class="col-xs-12" style="padding-left: 102px">
 			<span><a class="usname camel" href="/user/<%= id %>" style="color:#000"><b><%= fname %> <%= lname %></b></a></span><br>
-			<span class="handle"><a href="/user/<%= id %>" style="color:inherit">@<%= tweet_handle %></a></span>
+			<% if(tweet_handle) { %><span class="handle"><a href="/user/<%= id %>" style="color:inherit">@<%= tweet_handle %></a></span><% } %>
 		</div>
 		<div class="col-xs-12" style="margin-top: 7px">
 			<div class="row">

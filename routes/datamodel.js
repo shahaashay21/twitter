@@ -4,11 +4,12 @@ var sequelize = new Sequelize('twitter', 'root', '', {
 	  host: 'localhost',
 	  dialect: 'mysql',
 
-	  pool: {
-	    max: 5,
-	    min: 0,
-	    idle: 10000
-	  },
+//	  pool: {
+//	    max: 5,
+//	    min: 0,
+//	    idle: 10000
+//	  },
+	  pool: false,
 });
 
 module.exports.Users = sequelize.define('users',{

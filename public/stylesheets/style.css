@@ -160,6 +160,29 @@ color: rgba(255,255,255,0.5) !important;
   	outline-style: none;
 }
 
+.input_text_box {
+	height:40px;
+  	display: block;
+  	padding:5px 10px 5px 10px;
+  	border: 3px solid #DDD;
+  	border-radius: 5px;
+  	color: #000;
+  	transition: all 0.3s ease-out;
+  	/*box-shadow:0px 0px 5px #BBB;*/
+  	width: 100%;
+  	margin: 5px 0;
+}
+
+.input_text_box:focus { 
+  	outline: none;
+  	/*border-radius: 8px; */
+  	border-color: #EBCB92;
+}
+
+.ff-text-danger{
+	color: #db2e2e;
+}
+
 /*0.6.1 ERROR FIELD*/
 .inputerr{
 	border-color: #db2e2e;
@@ -500,4 +523,26 @@ color: rgba(255,255,255,0.5) !important;
 	color: #66757f;
 	font-weight:bold;
 	font-weight: 15px
+}
+
+.profile-btn{
+	font-size:14px; 
+	font-weight:bold;
+	width: 100px;
+}
+.btn-edit{
+	color:#66757f;
+}
+.btn-following{
+	color:#fff;
+	background-color:#1da1f2;
+	border:1px solid #3b88c3;
+}
+.btn-unfollow{
+	color: #fff;
+	background-color:#e81c4f;
+	border:1px solid #3b88c3;
+}
+.btn-follow{
+	color:#292f33;
 }

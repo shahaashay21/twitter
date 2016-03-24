@@ -108,6 +108,16 @@ app.post('/hashtweet', hash.hashtweet);
 app.post('/like', tweet.like);
 //Show all tweets of user by userid
 app.post('/tweetbyuserid', tweet.tweetbyuserid);
+//Follow and unfollow user
+app.post('/followid', user.follow);
+//User information to update it using model
+app.post('/userinfo', user.userinfo);
+//Update user information it using model
+app.post('/addinfo', user.addinfo);
+//Retweet
+app.post('/retweet', tweet.retweet);
+
+app.get('/test', login.test);
 
 
 

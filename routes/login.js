@@ -16,7 +16,7 @@ exports.loginUser = function(req, res){
 			});
 		 }else{
 //			 console.log('ALWAYS HERE');
-			 console.log(resa);
+//			 console.log(resa);
 			 if(resa.uid){
 				 req.session.uid = resa;
 				 res.end(JSON.stringify('pass')); 
@@ -129,3 +129,11 @@ exports.logOut = function(req,res){
 		res.json("done");
 	});
 };
+
+//QUERY USING MYSQL
+//exports.test = function(req,res){
+//	q = "select * from follow where following_id='500000066' limit 1";
+//	connection.query(q,function(err, data){
+//		res.end(JSON.stringify(data));
+//	})
+//}

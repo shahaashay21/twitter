@@ -2,8 +2,44 @@
 	
 	<div>
 		<div class="col-xs-12" style="padding-left: 45px">
-			<span><a class="usname camel" href="/user/<%= us.id %>" style="color:#000"><span style="font-size: 22px; font-weight:bold"><%= us.fname %> <%= us.lname %></span></a></span><br>
-			<span class="handle"><a href="/user/<%= us.id %>" style="color:#8899a6"><span style="font-size: 15px;">@<%= us.tweet_handle %></span></a></span>
+			<span>
+				<a class="usname camel" href="/user/<%= us.id %>" style="color:#000">
+					<span style="font-size: 22px; font-weight:bold">
+						<%= us.fname %> <%= us.lname %>
+					</span>
+				</a>
+			</span><br>
+			<span class="handle">
+				<a href="/user/<%= us.id %>" style="color:#8899a6">
+					<% if(us.tweet_handle) { %>
+						<span style="font-size: 15px;">
+							@<%= us.tweet_handle %>
+						</span>
+					<% } %>
+				</a>
+			</span><br><br>
+			<span>
+				<i class="fa fa-calendar" style="color: #8899a6"></i>
+				<span style="color:#292f33">Joined On 
+				<%
+					var month = new Array();
+					month[0] = "January";
+					month[1] = "February";
+					month[2] = "March";
+					month[3] = "April";
+					month[4] = "May";
+					month[5] = "June";
+					month[6] = "July";
+					month[7] = "August";
+					month[8] = "September";
+					month[9] = "October";
+					month[10] = "November";
+					month[11] = "December"; %>
+					<%=
+					month[(new Date(us.createdAt)).getMonth()];
+				%> <%= (new Date(us.createdAt)).getDate() %>, <%= (new Date(us.createdAt)).getFullYear();  %>
+				</span>
+			</span>
 		</div>
 		<div class="col-xs-12" style="margin-top: 7px">
 			<div class="row">

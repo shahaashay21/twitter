@@ -24,7 +24,7 @@ app.controller("twitter",function($scope, $http, $location){
 			url: '/logout',
 		}).then(function suc(val){
 			if(val.data == "done"){
-				window.location.reload();
+				window.location.assign('/');
 			}
 		});
 	};
@@ -47,7 +47,7 @@ app.controller("twitter",function($scope, $http, $location){
 			}).then(function suc(val){
 				if(val){
 					angular.element("#tweetbox").modal('hide');
-					alertline("alert-notify-success","<b>Tweet has been posted</b>");
+					alertline("alert-notify-success","<b>Tweet has been successfully posted</b>");
 					angular.element(".stylish-input-group2").hide();
 					angular.element(".stylish-input-group1").show();
 					angular.element(".center-home .top").css('height', '55px');
@@ -98,12 +98,24 @@ app.controller("twitter",function($scope, $http, $location){
 			for(var i=0; i<$scope.tweets.length; i++){// Give all object of tweet
 //				console.log($scope.tweets[i].tweet);
 				var hashtag = [];
-				var hashWithSpace = $scope.tweets[i].tweet.match(/(^#\w+| #\w+| #\w+)/g);
-				if(hashWithSpace){
-					hashWithSpace = hashWithSpace.getUnique(true);
-					for(var j=0; j<hashWithSpace.length; j++){// Get hastag from tweet
-						hashtag[j] = hashWithSpace[j].trim();
-						$scope.tweets[i].tweet = $scope.tweets[i].tweet.replace(new RegExp(hashtag[j],'g'),"<a href='/hashtag/"+hashtag[j].substring(1)+"'>"+hashtag[j]+"<a/>");
+				if($scope.tweets[i].tweet != null && $scope.tweets[i].tweet != ""){
+					var hashWithSpace = $scope.tweets[i].tweet.match(/(^#\w+| #\w+| #\w+)/g);
+					if(hashWithSpace){
+						hashWithSpace = hashWithSpace.getUnique(true);
+						for(var j=0; j<hashWithSpace.length; j++){// Get hastag from tweet
+							hashtag[j] = hashWithSpace[j].trim();
+							$scope.tweets[i].tweet = $scope.tweets[i].tweet.replace(new RegExp(hashtag[j],'g'),"<a href='/hashtag/"+hashtag[j].substring(1)+"'>"+hashtag[j]+"<a/>");
+						}
+					}
+				}
+				if($scope.tweets[i].parent_tweet != null && $scope.tweets[i].parent_tweet != ""){
+					var hashWithSpace = $scope.tweets[i].parent_tweet.match(/(^#\w+| #\w+| #\w+)/g);
+					if(hashWithSpace){
+						hashWithSpace = hashWithSpace.getUnique(true);
+						for(var j=0; j<hashWithSpace.length; j++){// Get hastag from tweet
+							hashtag[j] = hashWithSpace[j].trim();
+							$scope.tweets[i].parent_tweet = $scope.tweets[i].parent_tweet.replace(new RegExp(hashtag[j],'g'),"<a href='/hashtag/"+hashtag[j].substring(1)+"'>"+hashtag[j]+"<a/>");
+						}
 					}
 				}
 				$scope.tweets[i].newdate = new Date($scope.tweets[i].createdAt); 
@@ -136,6 +148,9 @@ app.controller("twitter",function($scope, $http, $location){
 	//		console.log($scope.tweets);	
 		});
 	}
+	
+//	 }
+	
 	//DELETE TWEET
 	$scope.deleteTweet = function(id){
 		console.log(id);
@@ -147,6 +162,7 @@ app.controller("twitter",function($scope, $http, $location){
 			data: data
 		}).then(function success(res){
 			$scope.recenttweet();
+			alertline("alert-notify-success","<b>Tweet has been successfully deleted</b>");
 			$scope.totalTweet -= 1;
 		});
 	};
@@ -205,7 +221,7 @@ app.controller("twitter",function($scope, $http, $location){
 	}
 	
 	
-	$scope.like = function(id,userlike,index){
+	$scope.like = function(id,userlike,index,retweet){
 		data = {'id': id};
 //		console.log(index);
 		$http({
@@ -215,15 +231,145 @@ app.controller("twitter",function($scope, $http, $location){
 			dataType: 'json'
 		}).then(function suc(reslike){
 			if(reslike.data == true){
-				$scope.tweets[index].tweetlikes = Number($scope.tweets[index].tweetlikes) + 1;
-				$scope.tweets[index].userlike = 1;
+				if(retweet == 0){
+					$scope.tweets[index].tweetlikes = Number($scope.tweets[index].tweetlikes) + 1;
+					$scope.tweets[index].userlike = 1;
+				}else{
+					$scope.tweets[index].parent_tweet_likes_count = Number($scope.tweets[index].parent_tweet_likes_count) + 1;
+					$scope.tweets[index].retweet_liked = 1;
+				}
 			}
 			if(reslike.data == false){
-				$scope.tweets[index].tweetlikes = Number($scope.tweets[index].tweetlikes) - 1;
-				$scope.tweets[index].userlike = 0;
+				if(retweet == 0){
+					$scope.tweets[index].tweetlikes = Number($scope.tweets[index].tweetlikes) - 1;
+					$scope.tweets[index].userlike = 0;
+				}else{
+					$scope.tweets[index].parent_tweet_likes_count = Number($scope.tweets[index].parent_tweet_likes_count) - 1;
+					$scope.tweets[index].retweet_liked = 0;
+				}
 			}
 		});
 	}
+	
+	//FOLLOW AND UNFOLLOW
+	$scope.follow = function(followid, followChk){
+		data = {'id': followid, 'followChk': followChk};
+		console.log('go '+followChk);
+		$http({
+			method: 'POST',
+			url: '/followid',
+			data: data,
+			dataType: 'json'
+		}).then(function suc(followUserChk){
+			console.log('return '+followUserChk.data);
+			$scope.proffollowchk = followUserChk.data;
+		});
+	}
+	
+	//CHECK WHETHER SELECTED PROFILE IS OWNER,FOLLOWERS OR NOT(FOR BUTTONS)
+	$scope.profilebtn = function(){
+		if(window.userid == window.user_id){
+//			$scope.profuser = 1;
+		}else{
+//			$scope.profuser = 0;
+		}
+		$scope.profuserid = window.userid;
+		$scope.profuser_id = window.user_id;
+		$scope.proffollowchk = window.followchk;
+	}
+	
+	//UPDATE USER INFORMATION MODEL
+	$scope.updateInfo = function(){
+		$http({
+			method: 'POST',
+			url: '/userinfo'
+		}).then(function suc(data){
+			console.log(data);
+			if(data.data.bday != null || data.data.bday != "" || data.data.bday != "0000-00-00"){
+				bday = new Date(data.data.bday);
+				data.data.bday = new Date(bday.getYear(),bday.getMonth(),bday.getDate()+1);
+			}
+//			console.log(new Date(data.data.bday).getYear());
+			if(data.data.bday == "0000-00-00" || new Date(data.data.bday).getYear() == '69'){
+				data.data.bday = null;
+			}
+//			console.log(data.data.bday);
+			$scope.userinfo = data.data;
+		});
+	}
+	
+	$scope.addinfo = function(){
+//		angular.element(".input_text_box").hide();
+		angular.element(".input_text_box").removeClass("inputerr");
+		angular.element(".ff-text-danger").remove();
+		data = {'user': $scope.userinfo};
+		$http({
+			method: 'POST',
+			url: '/addinfo',
+			data: data,
+			dataType: 'json'
+		}).then(function suc(data){
+			console.log(data.data);
+			if(data.data.msg == 1){
+				angular.forEach(data.data.message, function(i,item){
+					angular.element("#"+item).addClass("inputerr");
+					angular.element("#"+item).after("<div class=\'col-xs-12 ff-text-danger\'>"+i+"</div>");
+				});
+			}else{
+				angular.element("#userinfo").modal("hide");
+				alertline("alert-notify-success","<b>Saved contact information</b>");
+			}
+		});
+	}
+	
+	//User Retweet
+	$scope.retweet = function(user,userid,parent_id,retweet,index){
+		if(user == userid){
+			alertline("alert-notify-warning","<b>Can not retweet your own tweet</b>");
+		}else{
+			data = {'id': parent_id, 'retweet': retweet};
+			$http({
+				method: 'POST',
+				url: '/retweet',
+				data: data,
+				dataType: 'json'
+			}).then(function suc(res){
+				if($scope.tweets[index].parent_tweet_retweet_count == null || $scope.tweets[index].parent_tweet_retweet_count == "");{
+					$scope.tweets[index].parent_tweet_retweet_count = 0;
+				}
+				if(res.data == true){
+					if(retweet == 0){
+						$scope.tweets[index].parent_tweet_retweet_count = Number($scope.tweets[index].parent_tweet_retweet_count) + 1;
+						$scope.tweets[index].retweeted = 1;
+					}else{
+						$scope.tweets[index].retweet_count = Number($scope.tweets[index].retweet_count) + 1;
+						$scope.tweets[index].retweeted = 1;
+					}
+				}
+				if(res.data == false){
+					if(retweet == 0){
+						$scope.tweets[index].parent_tweet_retweet_count = Number($scope.tweets[index].parent_tweet_retweet_count) - 1;
+						$scope.tweets[index].retweeted = 0;
+					}else{
+						$scope.tweets[index].retweet_count = Number($scope.tweets[index].retweet_count) - 1;
+						$scope.tweets[index].retweeted = 0;
+					}
+				}
+				console.log(res.data);
+				if(window.location.pathname.indexOf("/user") >= 0){
+					
+				}
+				if(window.location.pathname.indexOf("/user") >= 0){
+					
+				}else{
+//					$scope.recenttweet();
+				}
+				$scope.recenttweet();
+				
+			});
+		}
+	}
+	
 	
 	//GET UNIQUE ARRAY
 	Array.prototype.getUnique = function (createArray) {
@@ -248,9 +394,12 @@ app.controller("twitter",function($scope, $http, $location){
 	
 	//CALL DEFAULT WHEN PAGE LOAD
 	$scope.recenttweet();
+	if(window.location.pathname.indexOf("/user") >= 0){
+		$scope.profilebtn();
+	}
 });
 
-// DIRECTIVE MADE IN ORDER TO APPLY JQUERY AFTER NG-REPEAT TAG
+// DIRECTIVE MADE IN ORDER TO APPLY JQUERY AFTER NG-REPEAT, HTTP
 app.directive('searchRepeatDirective', function() {
 	  return function(scope, element, attrs) {
 		  element.hover(function (){
@@ -263,4 +412,15 @@ app.directive('searchRepeatDirective', function() {
 			  angular.element(this).find('.suggest-hashtag').css("color","#66757f");
 		  });
 	  };
-})
+});
+app.directive('followBtn', function(){
+	return function(scope, element, attrs) {
+		element.hover(function (){
+			angular.element(".btn-following").addClass("btn-unfollow");
+    		angular.element(".btn-following").html("Unfollow");
+		},function (){
+			angular.element(".btn-following").removeClass("btn-unfollow");
+			angular.element(".btn-following").html("Following");
+		});
+	};
+});
