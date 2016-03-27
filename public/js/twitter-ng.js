@@ -6,16 +6,6 @@ app.filter('unsafe', function($sce) {
     };
 });
 
-app.controller("twitterhash",function($scope, $http){
-
-//	$scope.hashtag = function(){
-//		$http({
-//		});
-//	}
-//	angular.element('.center-home').hide();
-//	$scope.hashtag();
-});
-
 app.controller("twitter",function($scope, $http, $location){
 	//LOGOUT USER
 	$scope.logout = function(){

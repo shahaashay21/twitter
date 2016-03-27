@@ -53,7 +53,6 @@ exports.registerUser = function(req,res){
 					}else{
 						res.end(JSON.stringify('available'));
 					}
-				
 			});
 		});
 	});
