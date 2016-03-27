@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>#<%= hashSearch.toString() %></title>
+    <% include head.ejs %>
+  </head>
+  <body  ng-app="twitter" ng-controller="twitter" ng-init="tweetss=init('<%= fname %>')">
+  	<% include header-home.ejs %>
+  	
+  	<div class="container" style="margin-top: 10px">
+  		<div class="row">
+  			<div class="col-lg-3 left-panel">
+  				
+  			</div>
+  			<div class="col-lg-6">
+  				<% include hashsearch.ejs %>
+  				<% include center-home.ejs %>
+  			</div>
+  			<div class="col-lg-9">
+  				<% include right-home.ejs %>
+  			</div>
+  		</div>
+  	</div>
+  	
+  	
+  	<script>hashSearch="<%=hashSearch%>";</script>
+    <% include foot.ejs %>
+  </body>
+</html>

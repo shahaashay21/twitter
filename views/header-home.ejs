@@ -1,0 +1,113 @@
+<div class="alert-top-notify suc col-lg-12"></div>
+<div class="modal fade" id="tweetbox" role="dialog">
+	<div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          	<button type="button" class="close" data-dismiss="modal">&times;</button>
+          	<center><h4 style="color: #8899a6">Compose new Tweet</h4></center>
+        </div>
+        <div class="modal-body" style="background: #e8f4fb; height: 160px">
+	        <div class="input-group" style="width: 100%;">
+		        		<textarea ng-model="tweet" class="tweetarea" ng-keyup="tweetchar()" rows="3" spellcheck="true" placeholder="What&#39;s Happening?">{{ tweet }}</textarea>
+		        	</div>
+        	<div class="bottom-textarea" style="padding-top: 5px;">
+            	<span class="glyphicon glyphicon-camera pull-left" style="color: #1b95e0;; font-size: 24px"></span>
+            	<div class="pull-right">
+            		<div class="pull-left" style="color: #66757f; margin: 7px 15px">{{ 140 - tweet.length }}</div>
+            		<div class="tweet tweetsubmitbtn pull-left disabled" ng-click="tweetsubmit();">
+			        	<span class="glyphicon glyphicon-leaf"></span>
+			        	<span>Tweet</span>
+			        </div>
+            	</div>
+            </div>
+        </div>
+      </div>
+      
+    </div>
+</div>
+<div class="container-fluid header-home">
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-3" style="margin-top:15px">
+				<div class="pull-left home menu" >
+					<center>
+						<span class="glyphicon glyphicon-home" aria-hidden="true" style="font-size:20px;"></span>
+						<a href="/"><span style="font-size:18px;">Home</span></a>
+					</center>
+				</div>
+				
+				<div class="pull-left notification menu">
+					<center>
+						<span class="glyphicon glyphicon-bell" aria-hidden="true" style="font-size:20px;"></span>
+						<span style="font-size:18px;">Notification</span>
+					</center>
+				</div>
+			</div>
+			<div class="col-sm-3" style="margin-top:15px">
+					<i class="fa fa-twitter pull-right" style="color: #1da1f2; font-size: 24px"></i>
+			</div>
+			<div class="col-sm-6" style="margin:10px 0px">
+				<div class="pull-right">
+					<div class="input-group stylish-input-group pull-left">
+			           <input type="text" class="form-control search-input" ng-model="q" ng-focus="search('focus')" ng-keyup="search('q')" placeholder="Search Twitter">
+			            <span class="input-group-addon">
+			                <button type="submit">
+			                    <span class="glyphicon glyphicon-search"></span>
+			                </button>  
+			            </span>
+			            <!-- Put That Code Here -->
+			            <!-- Data for User information -->
+			            <div class="dropdown-toggle qsuggest"  data-toggle="dropdown" style="position:absolute; width: 300px; top: 41px; left: 0px;">
+			            	  <ul class="dropdown-menu for-drop">
+							  	<li ng-repeat="se in availableTags">
+								  <a search-Repeat-Directive href="#" ng-click="userRedirect(se.id)" class="camel highlightstyle" style="display:table; padding: 10px 0; width: 300px">
+								  	<div class="col-xs-12 no-padding">
+								  		<div class="col-xs-2 no-padding">
+								  			<img ng-src="/img/{{ se.dp }}" class="img-rounded menu-img">
+								  		</div>
+								  		<div class="col-xs-10" style="padding-top: 5px">
+								  			<span class="suggest-name">{{ se.fname }} {{ se.lname }}</span>
+								  			<span class="suggest-handle" ng-if="se.tweet_handle != null">@{{ se.tweet_handle }}</span>
+								  		</div>
+								  	</div>
+								  </a>
+								</li>
+							  </ul>
+			            </div>
+			            <!-- Hashtag Information -->
+			            <div class="dropdown-toggle qsuggesthashtag"  data-toggle="dropdown" style="position:absolute; width: 300px; top: 41px; left: 0px;">
+			            	  <ul class="dropdown-menu for-drop-hashtag">
+							  	<li ng-repeat="qHashtag in availableTagsHashtag">
+								  <a search-Repeat-Directive href="#" ng-click="hashtagRedirect(qHashtag.hashtag)" class="camel highlightstyle" style="display:table; padding: 10px 0; width: 300px">
+								  	<div class="col-xs-12 no-padding">
+								  		<div class="col-xs-12" style="padding-top: 5px">
+								  			<span class="suggest-hashtag">#{{ qHashtag.hashtag }}</span>
+								  		</div>
+								  	</div>
+								  </a>
+								</li>
+							  </ul>
+			            </div>
+			        </div>
+			        <div class="pull-left dropdown dropdown-arrow">
+			        	<img src="/img/<%= dp %>" class="img-rounded menu-img dropdown-toggle" data-toggle="dropdown">
+			        	<ul class="dropdown-menu">
+						    <li><a href="/user/<%= id %>">Profile</a></li>
+						    <li><a href="" ng-click="logout();">Logout</a></li>
+						  </ul>
+			        </div>
+			        <div class="tweet pull-left" data-toggle="modal" data-target="#tweetbox">
+			        	<span class="glyphicon glyphicon-leaf"></span>
+			        	<span>Tweet</span>
+			        </div>
+		        </div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<!--JUST TO GIVE MARGIN FROM TOP-->
+<div class="container top-padd" style="height:55px"></div>
