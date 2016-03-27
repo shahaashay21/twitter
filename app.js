@@ -84,7 +84,7 @@ app.get('/users', user.list);
 app.get('/hashtag/:tag', hash.page);
 
 //USER PROFILE FROM ID
-app.get('/user/:id',user.profile)
+app.get('/user/:id',user.profile);
 
 //POST REQUEST
 
@@ -117,7 +117,7 @@ app.post('/addinfo', user.addinfo);
 //Retweet
 app.post('/retweet', tweet.retweet);
 
-app.get('/test', login.test);
+//app.post('/test', login.test);
 
 
 
